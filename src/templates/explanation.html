@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Explanation</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+    </style>
+</head>
+<body data-theme="abyss">
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold text-center mb-6">Code Explanation</h1>
+        <div class="card shadow-md bg-base-100">
+            <div class="card-body">
+                <div class="tabs tabs-lift">
+                    <input type="radio" name="my_tabs" class="tab" aria-label="Overview" checked="checked"  />
+                    <div class="tab-content bg-base-100 border-base-300 p-6">
+                        <p><b>Path:</b> {{ data.overview.path }}</p>
+                        <p class="prose">{{ data.overview.purpose }}</p>
+                        <p class="prose">{{ data.overview.architecture }}</p>
+
+                        <h4 class="text-md font-semibold mt-6">Sample Usage:</h4>
+                        <div class="mockup-code w-full mb-6">
+                            <pre><code>{{data.overview.sample_usage}}</code></pre>
+                        </div>
+                        <p class="mt-4"><strong>Design Patterns:</strong> {{ data.overview.design_patterns | join(", ") }}</p>
+                        <div class="mt-6">
+                            {% for component in data.overview.key_components %}
+                                <span class="badge badge-primary">{{ component }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <input type="radio" name="my_tabs" class="tab" aria-label="Functional Concepts" />
+                    <div class="tab-content bg-base-100 border-base-300 p-6">
+                        <ul>
+                            <li><strong>Pure Functions:</strong> {{ data.overview.functional_concepts.pure_functions | join(", ") }}</li>
+                            <li><strong>Immutability Usage:</strong> {{ data.overview.functional_concepts.immutability_usage | join(", ") }}</li>
+                            <li><strong>Higher Order Functions:</strong> {{ data.overview.functional_concepts.higher_order_functions | join(", ") }}</li>
+                            <li><strong>Composition Patterns:</strong> {{ data.overview.functional_concepts.composition_patterns | join(", ") }}</li>
+                        </ul>
+                    </div>
+
+                    <input type="radio" name="my_tabs" class="tab" aria-label="Code Flow" />
+                    <div class="tab-content bg-base-100 border-base-300 p-6">
+                        <h3 class="text-xl font-semibold">Entry Points</h3>
+                        <ul>
+                            {% for entry in data.code_flow.entry_points %}
+                            <li>
+                                <strong>Component:</strong> {{ entry.component }}<br>
+                                <strong>Description:</strong> {{ entry.description }}<br>
+                                <strong>Dependencies:</strong> {{ entry.dependencies | join(", ") }}<br>
+                                <strong>Functional Characteristics:</strong>
+                                <ul>
+                                    <li>Purity: {{ entry.functional_characteristics.purity }}</li>
+                                    <li>Side Effects: {{ entry.functional_characteristics.side_effects | join(", ") }}</li>
+                                    <li>Immutability: {{ entry.functional_characteristics.immutability }}</li>
+                                </ul>
+                            </li>
+                            {% endfor %}
+                        </ul>
+
+                        <h3 class="text-xl font-semibold mt-4">Main Workflows</h3>
+                        {% for workflow in data.code_flow.main_workflows %}
+                        <div class="mb-4">
+                            <h4 class="text-lg font-semibold">{{ workflow.name }}</h4>
+                            <p>{{ workflow.description }}</p>
+                            <p><strong>Steps:</strong></p>
+                            <ul>
+                                {% for step in workflow.steps %}
+                                <li>{{ step }}</li>
+                                {% endfor %}
+                            </ul>
+                            <p><strong>Data Flow:</strong> {{ workflow.data_flow | join(" || ") }}</p>
+                            <p><strong>Error Handling:</strong> {{ workflow.error_handling }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <input type="radio" name="my_tabs" class="tab" aria-label="Advanced Concepts" />
+                    <div class="tab-content bg-base-100 border-base-300 p-6">
+                        {% for concept in data.advanced_concepts.complex_patterns %}
+                        <div class="mb-4">
+                            <h4 class="text-lg font-semibold">{{ concept.pattern }}</h4>
+                            <p><strong>Location:</strong> {{ concept.location }} [{{concept.line_number}}]</p>
+                            <p><strong>Purpose:</strong> {{ concept.purpose }}</p>
+                            <div class="mockup-code w-full my-6">
+                                <pre><code>{{concept.code_snippet}}</code></pre>
+                            </div>
+                            <p><strong>Alternatives:</strong> {{ concept.alternatives | join(", ") }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <input type="radio" name="my_tabs" class="tab" aria-label="Improvement Areas" />
+                    <div class="tab-content bg-base-100 border-base-300 p-6">
+                        {% for area, issues in data.improvement_areas.items() %}
+                        <h3 class="text-xl font-semibold">{{ area | capitalize }}</h3>
+                        <ul>
+                            {% for issue in issues %}
+                            <li>
+                                <strong>Component:</strong> {{ issue.component }}<br>
+                                <strong>Issue:</strong> {{ issue.issue }}<br>
+                                <strong>Suggestion:</strong> {{ issue.suggestion }}<br>
+                                <strong>Benefit:</strong> {{ issue.benefit }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endfor %}
+                    </div>
+
+                    <input type="radio" name="my_tabs" class="tab" aria-label="Common Pitfalls" />
+                    <div class="tab-content bg-base-100 border-base-300 p-6">
+                        <ul>
+                            {% for pitfall in data.common_pitfalls %}
+                            <li>
+                                <strong>Scenario:</strong> {{ pitfall.scenario }}<br>
+                                <strong>Description:</strong> {{ pitfall.description }}<br>
+                                <strong>Solution:</strong> {{ pitfall.solution }}<br>
+                                <strong>Prevention:</strong> {{ pitfall.prevention }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <input type="radio" name="my_tabs" class="tab" aria-label="Learning Resources" />
+                    <div class="tab-content bg-base-100 border-base-300 p-6">
+                        <ul>
+                            <li><strong>Related Patterns:</strong> {{ data.learning_resources.related_patterns | join(", ") }}</li>
+                            <li><strong>Documentation:</strong> {{ data.learning_resources.documentation | join(", ") }}</li>
+                            <li><strong>Similar Examples:</strong> {{ data.learning_resources.similar_examples | join(", ") }}</li>
+                            <li><strong>Functional Programming Resources:</strong> {{ data.learning_resources.functional_programming_resources | join(", ") }}</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

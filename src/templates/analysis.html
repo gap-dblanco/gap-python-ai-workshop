@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Report</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style>
+      html, body {
+        min-height: 100%;
+        margin: 0;
+      }
+    </style>
+</head>
+<body class="" data-theme="abyss">
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold text-center mb-6">Analysis Report</h1>
+        <div class="card shadow-md bg-base-100">
+            <div class="card-body">
+                <h2 class="text-2xl font-semibold mb-4">Quality Gate</h2>
+                <div class="mb-4">
+                    <p><strong>Status:</strong> <span class="badge badge-accent">{{ data.quality_gate.status }}</span></p>
+                    <ul class="list">
+                        {% for condition in data.quality_gate.conditions %}
+                        <li class="list-row">
+                            <div class="text-xs uppercase font-semibold opacity-60 w-40">{{ condition.metric | replace("_rating", "") }}</div>
+                            <div><span class="badge-xs badge badge-info">{{ condition.status }}</span></div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <h2 class="text-2xl font-semibold mb-4">Metrics</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    {% for key, value in data.metrics.items() %}
+                    <div class="bg-base-300 text-secondary p-4 rounded-lg">
+                        <h3 class="text-xl text-primary font-semibold">{{ key | capitalize }}</h3>
+                        <ul>
+                            {% for metric, metric_value in value.items() %}
+                            <li><strong>{{ metric | capitalize }}:</strong> {{ metric_value }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <h2 class="text-2xl font-semibold mt-6 mb-4">Issues</h2>
+                <table class="table-auto w-full border-collapse border border-gray-300">
+                    <thead>
+                        <tr class="bg-base-300">
+                            <th class="border border-gray-300 px-4 py-2">Key</th>
+                            <th class="border border-gray-300 px-4 py-2">Rule</th>
+                            <th class="border border-gray-300 px-4 py-2">Severity</th>
+                            <th class="border border-gray-300 px-4 py-2">Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for issue in data.issues %}
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-2">{{ issue.key }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ issue.rule }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ issue.severity }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ issue.message }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
