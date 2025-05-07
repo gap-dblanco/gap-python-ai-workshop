@@ -37,7 +37,7 @@ python app.py
 ### 1. The project tree (unix command):
 
 ```
-tree -L 4 -I "AI|node_modules|docs|target|__pycache__" > AI/context/tree.md
+mkdir -p AI/context && tree -L 4 -I "AI|node_modules|docs|target|__pycache__|venv|run" > AI/context/tree.md
 ```
 
 ### 2. The project stack
@@ -167,7 +167,7 @@ Finally add this at the bottom:
 ### 5. Gen: Unit Tests
 
 ```
-Generate pytest unit tests for the files in ./src/models/*.py and place them in ./src/tests/models/ directory.
+Generate pytest unit tests for the files in ./src/models/*.py and place them in ./tests/models/ directory.
 Follow the guidelines in ./AI/context/ files, specially ./AI/context/pytest.md.
 
 ... run pytest and make sure the tests are green
@@ -184,10 +184,3 @@ Analyze [FILE] using AI/prompts/analysis.md instructions.
 ```
 Follow instructions in AI/prompts/explain.md for [FILE]
 ```
-
-### 8. TDD (Bonus)
-
-```
-
-```
-
